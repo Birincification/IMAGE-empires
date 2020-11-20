@@ -57,7 +57,7 @@ method="`echo $dir | cut -d '/' -f 5`"
 cd $dir
 
 ( [ -f "$diffsplicOut$method" ] && echo "[INFO] [EMPIRES] $diffsplicOut$method already exists; skipping.."$'\n' ) || \
-( echo "[INFO] [EMPIRES] Starting processing in $dir" && /home/software/jdk-13.0.1/bin/java -Xmx60000M -cp /home/software/nlEmpiRe.jar nlEmpiRe.input.TranscriptEstimateInput -cond2reps $cond2reps -gtf $gtf -trestimateroot $dir -trues $splic -o $diffsplicOut$method )
+( echo "[INFO] [EMPIRES] Starting processing in $dir" && java -Xmx60000M -cp /home/software/nlEmpiRe.jar nlEmpiRe.input.TranscriptEstimateInput -cond2reps $cond2reps -gtf $gtf -trestimateroot $dir -trues $splic -o $diffsplicOut$method )
 echo "done with $dir"
 done
 

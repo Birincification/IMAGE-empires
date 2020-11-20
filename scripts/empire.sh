@@ -21,5 +21,5 @@ cmd=`grep "^$1	" /home/scripts/emp.commands | cut -f2`
 
 shift 1
 
-echo "/home/software/jdk-13.0.1/bin/java -Xmx$JAVAMAXMEM -cp $jar $cmd $*"
-/home/software/jdk-13.0.1/bin/java -Xmx$JAVAMAXMEM -cp $jar $cmd $*
+echo "java -Xmx$JAVAMAXMEM -cp $jar $cmd $*"
+java -Xmx$JAVAMAXMEM -cp $jar $cmd $*
