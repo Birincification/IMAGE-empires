@@ -1,10 +1,12 @@
 #!/bin/bash
 
-index=$1
-pData=$2
-sampleDir=$3
-strand=$4
+## index dir needs to be mounted
+#index=$1
+pData=$1
+sampleDir=$2
+strand=$3
 
+index="/home/data/indices/empires/empires.index"
 samplesTable2="/home/data/out/EmpiReS/samples.table2"
 eccCounts="/home/data/out/EmpiReS/ecc.counts"
 diffsplicOut="/home/data/out/diff_splicing_outs/empire.diffsplic.outECC"
