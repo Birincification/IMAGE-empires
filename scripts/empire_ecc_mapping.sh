@@ -1,5 +1,7 @@
 #!/bin/bash
 
+## add xmx as param? -> maybe not good as no user would know what to put?
+
 ## index dir needs to be mounted
 #index=$1
 pData=$1
@@ -31,7 +33,7 @@ sed '1d' $pData | awk -v strand=$strand '{print $1 "\t" $2 "\t" $1 "_1.fastq.gz"
 ## (-basedir) can be provided - if given all paths in the sample table are interpreted as relative to this directory
 ## (-nthreads) number of parallel threads used for the mapping, default: 10.
 ## 
-java -cp /home/software/nlEmpiRe.jar nlEmpiRe.rnaseq.mapping.TranscriptInfoBasedGenomicMapper \
+java -Xmx70G -cp /home/software/nlEmpiRe.jar nlEmpiRe.rnaseq.mapping.TranscriptInfoBasedGenomicMapper \
 -table $samplesTable2 \
 -index $index \
 -o $eccCounts \
@@ -39,10 +41,8 @@ java -cp /home/software/nlEmpiRe.jar nlEmpiRe.rnaseq.mapping.TranscriptInfoBased
 
 
 ## diffexp and das
-java -cp /home/software/nlEmpiRe.jar nlEmpiRe.release.EQCInput \
+java -Xmx70G -cp /home/software/nlEmpiRe.jar nlEmpiRe.release.EQCInput \
 -i $eccCounts \
 -samples $samplesTable2 \
--cond2reps $cond2reps \
--diffexpout $diffexpOut \
 -o $diffsplicOut
 
