@@ -33,11 +33,14 @@ sed '1d' $pData | awk -v strand=$strand '{print $1 "\t" $2 "\t" $1 "_1.fastq.gz"
 ## (-basedir) can be provided - if given all paths in the sample table are interpreted as relative to this directory
 ## (-nthreads) number of parallel threads used for the mapping, default: 10.
 ## 
-java -Xmx70G -cp /home/software/nlEmpiRe.jar nlEmpiRe.rnaseq.mapping.TranscriptInfoBasedGenomicMapper \
+
+## test if output exists
+( [ -f "$eccCounts" ] && echo "[INFO] [EMPIRES] $eccCounts already exists; skipping.."$'\n' ) || \
+( java -Xmx70G -cp /home/software/nlEmpiRe.jar nlEmpiRe.rnaseq.mapping.TranscriptInfoBasedGenomicMapper \
 -table $samplesTable2 \
 -index $index \
 -o $eccCounts \
--basedir $sampleDir
+-basedir $sampleDir )
 
 
 ## diffexp and das
