@@ -12,10 +12,12 @@ index="/home/data/indices/empires/empires.index"
 samplesTable2="/home/data/out/EmpiReS/samples.table2"
 eccCounts="/home/data/out/EmpiReS/ecc.counts"
 diffsplicOut="/home/data/out/diff_splicing_outs/empire.diffsplic.outECC"
-diffexpOut="/home/data/out/diff_exp_outs/empire.diffexp.outECC"
+## diffexpOut="/home/data/out/diff_exp_outs/empire.diffexp.outECC"
 
 
-
+## mkdir -p /home/data/out/diff_exp_outs/
+mkdir -p /home/data/out/diff_splicing_outs/
+mkdir -p /home/data/out/EmpiReS/
 
 ## EC-contextmap
 ## create table with format
