@@ -3,8 +3,11 @@
 gtf=$1
 fasta=$2
 fastaIndex=$3
+log=$4
 
 mkdir -p /home/data/indices/empires
+
+watch pidstat -dru -hl '>>' $log/empires_index-$(date +%s).pidstat & wid=$!
 
 ## creates index
 java -cp /home/software/nlEmpiRe.jar nlEmpiRe.rnaseq.mapping.ExtractTranscriptomeInfo \
@@ -12,3 +15,5 @@ java -cp /home/software/nlEmpiRe.jar nlEmpiRe.rnaseq.mapping.ExtractTranscriptom
  -genome $fasta \
  -genomeidx $fastaIndex \
  -o /home/data/indices/empires/empires.index
+
+kill -15 $wid
