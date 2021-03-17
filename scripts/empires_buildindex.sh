@@ -7,7 +7,7 @@ log=$4
 
 mkdir -p /home/data/indices/empires
 
-watch pidstat -dru -hl '>>' $log/empires_index-$(date +%s).pidstat & wid=$!
+watch pidstat -dru -hHl '>>' $log/empires_index-$(date +%s).pidstat & wid=$!
 
 ## creates index
 java -cp /home/software/nlEmpiRe.jar nlEmpiRe.rnaseq.mapping.ExtractTranscriptomeInfo \
