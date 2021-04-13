@@ -7,7 +7,7 @@ log=$4
 
 mkdir -p /home/data/indices/empires
 
-if [[ -f "/home/data/indices/empires/empires.index" ]] && echo "index already exists.." && exit 0
+[[ -f "/home/data/indices/empires/empires.index" ]] && echo "index already exists.." && exit 0
 
 watch pidstat -dru -hHl '>>' $log/empires_index-$(date +%s).pidstat & wid=$!
 
