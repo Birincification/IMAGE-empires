@@ -288,7 +288,7 @@ if [[ "$salmon" = "y" ]]; then
 
 	( [ -f "$diffsplicOut$method" ] && echo "[INFO] [EMPIRES] $diffsplicOut$method already exists; skipping.."$'\n' ) || \
 	( echo "[INFO] [EMPIRES] Starting processing in $dir" && \
-		$jcall nlEmpiRe.input.TranscriptEstimateInput -cond2reps $cond2reps -gtf $gtf -trestimateroot $dir $splic -o $diffsplicOut$method )
+		$jcall nlEmpiRe.input.TranscriptEstimateInput -cond2reps $cond2reps -gtf $gtf -trestimateroot $dir -o $diffsplicOut$method )
 
 	kill -15 $wid
 
@@ -300,7 +300,7 @@ if [[ "$salmon" = "y" ]]; then
 
 	( [ -f "$diffsplicOut$method" ] && echo "[INFO] [EMPIRES] $diffsplicOut$method already exists; skipping.."$'\n' ) || \
 	( echo "[INFO] [EMPIRES] Starting processing in $dir" && \
-		$jcall nlEmpiRe.input.TranscriptEstimateInput -cond2reps $cond2reps -gtf $gtf -trestimateroot $dir $splic -o $diffsplicOut$method )
+		$jcall nlEmpiRe.input.TranscriptEstimateInput -cond2reps $cond2reps -gtf $gtf -trestimateroot $dir -o $diffsplicOut$method )
 
 	kill -15 $wid
 fi
@@ -314,7 +314,7 @@ if [[ "$kallisto" = "y" ]]; then
 
 	( [ -f "$diffsplicOut$method" ] && echo "[INFO] [EMPIRES] $diffsplicOut$method already exists; skipping.."$'\n' ) || \
 	( echo "[INFO] [EMPIRES] Starting processing in $dir" && \
-		$jcall nlEmpiRe.input.TranscriptEstimateInput -cond2reps $cond2reps -gtf $gtf -trestimateroot $dir $splic -o $diffsplicOut$method )
+		$jcall nlEmpiRe.input.TranscriptEstimateInput -cond2reps $cond2reps -gtf $gtf -trestimateroot $dir -o $diffsplicOut$method )
 
 	kill -15 $wid
 fi
@@ -328,7 +328,7 @@ if [[ "$stringtie" = "y" ]]; then
 
 	( [ -f "$diffsplicOut$method" ] && echo "[INFO] [EMPIRES] $diffsplicOut$method already exists; skipping.."$'\n' ) || \
 	( echo "[INFO] [EMPIRES] Starting processing in $dir" && \
-		$jcall nlEmpiRe.input.TranscriptEstimateInput -cond2reps $cond2reps -gtf $gtf -trestimateroot $dir $splic -o $diffsplicOut$method )
+		$jcall nlEmpiRe.input.TranscriptEstimateInput -cond2reps $cond2reps -gtf $gtf -trestimateroot $dir -o $diffsplicOut$method )
 
 	kill -15 $wid
 fi
