@@ -103,9 +103,6 @@ while true; do
     esac
 done
 
-
-strand=$3
-
 index="$index/empires/empires.index"
 samplesTable="$out/EMPIRES/samples.table"
 samplesTable2="$out/EMPIRES/samples.table2"
@@ -157,6 +154,8 @@ if [[ "$ecc" = "y" ]]; then
 	## (-nthreads) number of parallel threads used for the mapping, default: 10.
 	## 
 
+	watch pidstat -dru -hlH '>>' $log/empires_${dir}_ecc_eqextract-$(date +%s).pidstat & wid=$!
+
 	## test if output exists
 	( [ -f "$eccCounts" ] && echo "[INFO] [EMPIRES] $eccCounts already exists; skipping.."$'\n' ) || \
 		( java -Xmx70G -cp /home/software/nlEmpiRe.jar nlEmpiRe.rnaseq.mapping.TranscriptInfoBasedGenomicMapper \
@@ -165,11 +164,16 @@ if [[ "$ecc" = "y" ]]; then
 		-o $eccCounts \
 		-basedir $samples )
 
+	kill -15 $wid
+	watch pidstat -dru -hlH '>>' $log/empires_${dir}_ecc_diff_exp_splic-$(date +%s).pidstat & wid=$!
+
 	## diffexp and das
 	java -Xmx70G -cp /home/software/nlEmpiRe.jar nlEmpiRe.release.EQCInput \
 		-i $eccCounts \
 		-samples $samplesTable2 \
 		-o ${diffsplicOut}ECC
+
+	kill -15 $wid
 fi
 
 if [[ "$hisat2" = "y" ]]; then
@@ -269,7 +273,7 @@ if [[ "$salmon" = "y" ]]; then
 	method="SALMON_STAR"
 	cd $dir
 
-	watch pidstat -dru -hlH '>>' $log/empires_${dir}_${method}_eqextract-$(date +%s).pidstat & wid=$!
+	watch pidstat -dru -hlH '>>' $log/empires_${dir}_${method}_trestimate-$(date +%s).pidstat & wid=$!
 
 	( [ -f "$diffsplicOut$method" ] && echo "[INFO] [EMPIRES] $diffsplicOut$method already exists; skipping.."$'\n' ) || \
 	( echo "[INFO] [EMPIRES] Starting processing in $dir" && \
@@ -281,7 +285,7 @@ if [[ "$salmon" = "y" ]]; then
 	method="SALMON_READS"
 	cd $dir
 
-	watch pidstat -dru -hlH '>>' $log/empires_${dir}_${method}_eqextract-$(date +%s).pidstat & wid=$!
+	watch pidstat -dru -hlH '>>' $log/empires_${dir}_${method}_trestimate-$(date +%s).pidstat & wid=$!
 
 	( [ -f "$diffsplicOut$method" ] && echo "[INFO] [EMPIRES] $diffsplicOut$method already exists; skipping.."$'\n' ) || \
 	( echo "[INFO] [EMPIRES] Starting processing in $dir" && \
@@ -295,7 +299,7 @@ if [[ "$kallisto" = "y" ]]; then
 	method="KALLISTO"
 	cd $dir
 
-	watch pidstat -dru -hlH '>>' $log/empires_${dir}_${method}_eqextract-$(date +%s).pidstat & wid=$!
+	watch pidstat -dru -hlH '>>' $log/empires_${dir}_${method}_trestimate-$(date +%s).pidstat & wid=$!
 
 	( [ -f "$diffsplicOut$method" ] && echo "[INFO] [EMPIRES] $diffsplicOut$method already exists; skipping.."$'\n' ) || \
 	( echo "[INFO] [EMPIRES] Starting processing in $dir" && \
@@ -309,7 +313,7 @@ if [[ "$stringtie" = "y" ]]; then
 	method="STRINGTIE"
 	cd $dir
 
-	watch pidstat -dru -hlH '>>' $log/empires_${dir}_${method}_eqextract-$(date +%s).pidstat & wid=$!
+	watch pidstat -dru -hlH '>>' $log/empires_${dir}_${method}_trestimate-$(date +%s).pidstat & wid=$!
 
 	( [ -f "$diffsplicOut$method" ] && echo "[INFO] [EMPIRES] $diffsplicOut$method already exists; skipping.."$'\n' ) || \
 	( echo "[INFO] [EMPIRES] Starting processing in $dir" && \
