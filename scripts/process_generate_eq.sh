@@ -115,6 +115,7 @@ diffexpOut="/home/data/out/diff_exp_outs/empire.diffexp.out"
 
 jcall="java -Xmx70G -cp /home/software/nlEmpiRe.jar"
 
+dir=$(basename $out)
 
 mkdir -p /home/data/out/diff_exp_outs/
 mkdir -p $out/diff_splicing_outs/
@@ -161,6 +162,7 @@ if [[ "$ecc" = "y" ]]; then
 		( java -Xmx70G -cp /home/software/nlEmpiRe.jar nlEmpiRe.rnaseq.mapping.TranscriptInfoBasedGenomicMapper \
 		-table $samplesTable2 \
 		-index $index \
+		-nthreads $nthread \
 		-o $eccCounts \
 		-basedir $samples )
 
