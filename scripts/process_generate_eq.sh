@@ -121,6 +121,11 @@ mkdir -p /home/data/out/diff_exp_outs/
 mkdir -p $out/diff_splicing_outs/
 mkdir -p $out/EMPIRES/
 
+if [[ "$strand" = "null"]]; then
+	strand=
+fi
+
+
 #head -3 ../samples.table
 #id      bam     strandness
 #cond1_00        cond1_00.bam    true
