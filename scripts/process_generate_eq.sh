@@ -210,7 +210,7 @@ if [[ "$hisat2" = "y" ]]; then
 	( [ -f "$diffsplicOut$method" ] && echo "[INFO] [EMPIRES] $diffexpOut$method already exists; skipping.."$'\n' ) || \
 	( echo "[INFO] [EMPIRES] Starting diff processing in $dir" && \
 		$jcall nlEmpiRe.input.EQClassInput -samples $samplesTable -cond2reps $cond2reps \
-		-diffexpout $diffexpOut$method -o $diffsplicOut$method -eqclasscounts $dir/eqclass.counts >> $out/EMPIRES/diffanalysis_$method.log )
+		-diffexpout $diffexpOut$method -o $diffsplicOut$method -eqclasscounts $dir/eqclass.counts )
 	
 	kill -15 $wid
 fi
@@ -233,7 +233,7 @@ if [[ "$star" = "y" ]]; then
 	( [ -f "$diffsplicOut$method" ] && echo "[INFO] [EMPIRES] $diffexpOut$method already exists; skipping.."$'\n' ) || \
 	( echo "[INFO] [EMPIRES] Starting diff processing in $dir" && \
 		$jcall nlEmpiRe.input.EQClassInput -samples $samplesTable -cond2reps $cond2reps \
-		-diffexpout $diffexpOut$method -o $diffsplicOut$method -eqclasscounts $dir/eqclass.counts >> $out/EMPIRES/diffanalysis_$method.log )
+		-diffexpout $diffexpOut$method -o $diffsplicOut$method -eqclasscounts $dir/eqclass.counts )
 	
 	kill -15 $wid
 fi
@@ -256,7 +256,7 @@ if [[ "$contextmap" = "y" ]]; then
 	( [ -f "$diffsplicOut$method" ] && echo "[INFO] [EMPIRES] $diffexpOut$method already exists; skipping.."$'\n' ) || \
 	( echo "[INFO] [EMPIRES] Starting diff processing in $dir" && \
 		$jcall nlEmpiRe.input.EQClassInput -samples $samplesTable -cond2reps $cond2reps \
-		-diffexpout $diffexpOut$method -o $diffsplicOut$method -eqclasscounts $dir/eqclass.counts >> $out/EMPIRES/diffanalysis_$method.log )
+		-diffexpout $diffexpOut$method -o $diffsplicOut$method -eqclasscounts $dir/eqclass.counts )
 	
 	kill -15 $wid
 fi
@@ -279,7 +279,7 @@ if [[ "$ideal" = "y" ]]; then
 	( [ -f "$diffsplicOut$method" ] && echo "[INFO] [EMPIRES] $diffexpOut$method already exists; skipping.."$'\n' ) || \
 	( echo "[INFO] [EMPIRES] Starting diff processing in $dir" && \
 		$jcall nlEmpiRe.input.EQClassInput -samples $samplesTable -cond2reps $cond2reps \
-		-diffexpout $diffexpOut$method -o $diffsplicOut$method -eqclasscounts $dir/eqclass.counts >> $out/EMPIRES/diffanalysis_$method.log )
+		-diffexpout $diffexpOut$method -o $diffsplicOut$method -eqclasscounts $dir/eqclass.counts )
 	
 	kill -15 $wid
 fi
