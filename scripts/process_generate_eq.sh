@@ -141,10 +141,13 @@ fi
 #
 ## create samplesTable from sampleList
 ## echo 'id\tbam\tstrandness' > $samplesTable
-echo "id"$'\t'"bam"$'\t'"strandness" > $samplesTable
-sed '1d' $pdata | awk -v strand=$strand '{print $1 "\t" $1.bam "\t" strand}' >> $samplesTable
+( [ -f "$samplesTable" ] && echo "$'\n'[INFO] [EMPIRES] $samplesTable already exists; skipping.." ) || \
+	( echo "id"$'\t'"bam"$'\t'"strandness" > $samplesTable &&
+	sed '1d' $pdata | awk -v strand=$strand '{print $1 "\t" $1.bam "\t" strand}' >> $samplesTable )
+
 ## create con2reps file from p_data
-sed -e '1d' $pdata | awk '{print $2 "\t" $1}' > $cond2reps
+( [ -f "$cond2reps" ] && echo "$'\n'[INFO] [EMPIRES] $cond2reps already exists; skipping.." ) || \
+	( sed -e '1d' $pdata | awk '{print $2 "\t" $1}' > $cond2reps )
 
 
 if [[ "$ecc" = "y" ]]; then
@@ -155,8 +158,9 @@ if [[ "$ecc" = "y" ]]; then
 	## cond1_00    cond1   cond1_00_1.fastq.gz cond1_00_2.fastq.gz true
 	## cond1_01    cond1   cond1_01_1.fastq.gz cond1_01_2.fastq.gz true
 	##
-	echo "label"$'\t'"condition"$'\t'"fw"$'\t'"rw"$'\t'"strandness" > $samplesTable2
-	sed '1d' $pdata | awk -v strand=$strand '{print $1 "\t" $2 "\t" $1 "_1.fastq.gz" "\t" $1 "_2.fastq.gz" "\t" strand}' >> $samplesTable2
+	( [ -f "$samplesTable2" ] && echo "$'\n'[INFO] [EMPIRES] $samplesTable2 already exists; skipping.." ) || \
+		( echo "label"$'\t'"condition"$'\t'"fw"$'\t'"rw"$'\t'"strandness" > $samplesTable2 &&
+		sed '1d' $pdata | awk -v strand=$strand '{print $1 "\t" $2 "\t" $1 "_1.fastq.gz" "\t" $1 "_2.fastq.gz" "\t" strand}' >> $samplesTable2 )
 	#for sample in `cat $sampleList`; do echo $sample$'\t'$sample.bam$'\t'$strand >> $samplesTable ; done
 
 	##
