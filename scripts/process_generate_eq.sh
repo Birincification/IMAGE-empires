@@ -144,7 +144,7 @@ fi
 ## echo 'id\tbam\tstrandness' > $samplesTable
 ( [ -f "$samplesTable" ] && echo "$'\n'[INFO] [EMPIRES] $samplesTable already exists; skipping.." ) || \
 	( echo "id"$'\t'"bam"$'\t'"strandness" > $samplesTable &&
-	sed '1d' $pdata | awk -v strand=$strand '{print $1 "\t" $1.bam "\t" strand}' >> $samplesTable )
+	sed '1d' $pdata | awk -v strand=$strand '{print $1 "\t" $1 ".bam" "\t" strand}' >> $samplesTable )
 
 ## create con2reps file from p_data
 ( [ -f "$cond2reps" ] && echo "$'\n'[INFO] [EMPIRES] $cond2reps already exists; skipping.." ) || \
