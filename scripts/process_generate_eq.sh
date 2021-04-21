@@ -207,10 +207,10 @@ if [[ "$hisat2" = "y" ]]; then
 	kill -15 $wid
 	watch pidstat -dru -hlH >> $log/empires_${name}_${method}_diff_exp_splic-$(date +%s).pidstat & wid=$!
 
-	( [ -f "$diffsplicOut$method" ] && echo "[INFO] [EMPIRES] $diffexpOut$method already exists; skipping.."$'\n' ) || \
+	( [ -f "$diffsplicOut$method" ] && echo "[INFO] [EMPIRES] $diffsplicOut$method already exists; skipping.."$'\n' ) || \
 	( echo "[INFO] [EMPIRES] Starting diff processing in $dir" && \
-		$jcall nlEmpiRe.input.EQClassInput -samples $samplesTable -cond2reps $cond2reps \
-		-diffexpout $diffexpOut$method -o $diffsplicOut$method -eqclasscounts $dir/eqclass.counts )
+		$jcall nlEmpiRe.release.EQCInput -samples $samplesTable2 \
+		 -o $diffsplicOut$method -i $dir/eqclass.counts )
 	
 	kill -15 $wid
 fi
@@ -230,10 +230,10 @@ if [[ "$star" = "y" ]]; then
 	kill -15 $wid
 	watch pidstat -dru -hlH >> $log/empires_${name}_${method}_diff_exp_splic-$(date +%s).pidstat & wid=$!
 
-	( [ -f "$diffsplicOut$method" ] && echo "[INFO] [EMPIRES] $diffexpOut$method already exists; skipping.."$'\n' ) || \
+	( [ -f "$diffsplicOut$method" ] && echo "[INFO] [EMPIRES] $diffsplicOut$method already exists; skipping.."$'\n' ) || \
 	( echo "[INFO] [EMPIRES] Starting diff processing in $dir" && \
-		$jcall nlEmpiRe.input.EQClassInput -samples $samplesTable -cond2reps $cond2reps \
-		-diffexpout $diffexpOut$method -o $diffsplicOut$method -eqclasscounts $dir/eqclass.counts )
+		$jcall nlEmpiRe.release.EQCInput -samples $samplesTable2 \
+		 -o $diffsplicOut$method -i $dir/eqclass.counts )
 	
 	kill -15 $wid
 fi
@@ -253,10 +253,10 @@ if [[ "$contextmap" = "y" ]]; then
 	kill -15 $wid
 	watch pidstat -dru -hlH >> $log/empires_${name}_${method}_diff_exp_splic-$(date +%s).pidstat & wid=$!
 
-	( [ -f "$diffsplicOut$method" ] && echo "[INFO] [EMPIRES] $diffexpOut$method already exists; skipping.."$'\n' ) || \
+	( [ -f "$diffsplicOut$method" ] && echo "[INFO] [EMPIRES] $diffsplicOut$method already exists; skipping.."$'\n' ) || \
 	( echo "[INFO] [EMPIRES] Starting diff processing in $dir" && \
-		$jcall nlEmpiRe.input.EQClassInput -samples $samplesTable -cond2reps $cond2reps \
-		-diffexpout $diffexpOut$method -o $diffsplicOut$method -eqclasscounts $dir/eqclass.counts )
+		$jcall nlEmpiRe.release.EQCInput -samples $samplesTable2 \
+		 -o $diffsplicOut$method -i $dir/eqclass.counts )
 	
 	kill -15 $wid
 fi
@@ -276,10 +276,10 @@ if [[ "$ideal" = "y" ]]; then
 	kill -15 $wid
 	watch pidstat -dru -hlH >> $log/empires_${name}_${method}_diff_exp_splic-$(date +%s).pidstat & wid=$!
 
-	( [ -f "$diffsplicOut$method" ] && echo "[INFO] [EMPIRES] $diffexpOut$method already exists; skipping.."$'\n' ) || \
+	( [ -f "$diffsplicOut$method" ] && echo "[INFO] [EMPIRES] $diffsplicOut$method already exists; skipping.."$'\n' ) || \
 	( echo "[INFO] [EMPIRES] Starting diff processing in $dir" && \
-		$jcall nlEmpiRe.input.EQClassInput -samples $samplesTable -cond2reps $cond2reps \
-		-diffexpout $diffexpOut$method -o $diffsplicOut$method -eqclasscounts $dir/eqclass.counts )
+		$jcall nlEmpiRe.release.EQCInput -samples $samplesTable2 \
+		 -o $diffsplicOut$method -i $dir/eqclass.counts )
 	
 	kill -15 $wid
 fi
