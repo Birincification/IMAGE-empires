@@ -29,7 +29,7 @@ if [[ ${PIPESTATUS[0]} -ne 0 ]]; then
 fi
 # read getopt’s output this way to handle the quoting right:
 eval set -- "$PARSED"
-
+contextmap=n ideal=n hisat2=n star=n kallisto=n salmon=n stringtie=n ecc=n
 # now enjoy the options in order and nicely split until we see --
 while true; do
     case "$1" in
