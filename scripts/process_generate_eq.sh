@@ -199,10 +199,10 @@ if [[ "$hisat2" = "y" ]]; then
 
 	watch pidstat -dru -hlH >> $log/empires_${name}_${method}_eqextract-$(date +%s).pidstat & wid=$!
 
-	( [ -f "$dir"/eqclass.counts ] && echo "$'\n'[INFO] [EMPIRES] $dir/eqclass.counts already exists; skipping.." ) || \
+	( [ -f "$dir"/$method.eqclass.counts ] && echo "$'\n'[INFO] [EMPIRES] $dir/eqclass.counts already exists; skipping.." ) || \
 	( echo " [INFO] [EMPIRES] Starting eq extract in $dir" && \
 		$jcall nlEmpiRe.rnaseq.reads.TranscriptEQClassWriter -gtf $gtf \
-		-table $samplesTable -o $dir/eqclass.counts > $out/EMPIRES/eqclass_$method.log )
+		-table $samplesTable -o $dir/$method.eqclass.counts > $out/EMPIRES/eqclass_$method.log )
 
 	kill -15 $wid
 	watch pidstat -dru -hlH >> $log/empires_${name}_${method}_diff_exp_splic-$(date +%s).pidstat & wid=$!
@@ -210,7 +210,7 @@ if [[ "$hisat2" = "y" ]]; then
 	( [ -f "$diffsplicOut$method" ] && echo "[INFO] [EMPIRES] $diffsplicOut$method already exists; skipping.."$'\n' ) || \
 	( echo "[INFO] [EMPIRES] Starting diff processing in $dir" && \
 		$jcall nlEmpiRe.release.EQCInput -samples $samplesTable2 \
-		 -o $diffsplicOut$method -i $dir/eqclass.counts )
+		 -o $diffsplicOut$method -i $dir/$method.eqclass.counts )
 	
 	kill -15 $wid
 fi
@@ -222,10 +222,10 @@ if [[ "$star" = "y" ]]; then
 
 	watch pidstat -dru -hlH >> $log/empires_${name}_${method}_eqextract-$(date +%s).pidstat & wid=$!
 
-	( [ -f "$dir"/eqclass.counts ] && echo "$'\n'[INFO] [EMPIRES] $dir/eqclass.counts already exists; skipping.." ) || \
+	( [ -f "$dir"/$method.eqclass.counts ] && echo "$'\n'[INFO] [EMPIRES] $dir/eqclass.counts already exists; skipping.." ) || \
 	( echo " [INFO] [EMPIRES] Starting eq extract in $dir" && \
 		$jcall nlEmpiRe.rnaseq.reads.TranscriptEQClassWriter -gtf $gtf \
-		-table $samplesTable -o $dir/eqclass.counts > $out/EMPIRES/eqclass_$method.log )
+		-table $samplesTable -o $dir/$method.eqclass.counts > $out/EMPIRES/eqclass_$method.log )
 
 	kill -15 $wid
 	watch pidstat -dru -hlH >> $log/empires_${name}_${method}_diff_exp_splic-$(date +%s).pidstat & wid=$!
@@ -233,7 +233,7 @@ if [[ "$star" = "y" ]]; then
 	( [ -f "$diffsplicOut$method" ] && echo "[INFO] [EMPIRES] $diffsplicOut$method already exists; skipping.."$'\n' ) || \
 	( echo "[INFO] [EMPIRES] Starting diff processing in $dir" && \
 		$jcall nlEmpiRe.release.EQCInput -samples $samplesTable2 \
-		 -o $diffsplicOut$method -i $dir/eqclass.counts )
+		 -o $diffsplicOut$method -i $dir/$method.eqclass.counts )
 	
 	kill -15 $wid
 fi
@@ -245,10 +245,10 @@ if [[ "$contextmap" = "y" ]]; then
 
 	watch pidstat -dru -hlH >> $log/empires_${name}_${method}_eqextract-$(date +%s).pidstat & wid=$!
 
-	( [ -f "$dir"/eqclass.counts ] && echo "$'\n'[INFO] [EMPIRES] $dir/eqclass.counts already exists; skipping.." ) || \
+	( [ -f "$dir"/$method.eqclass.counts ] && echo "$'\n'[INFO] [EMPIRES] $dir/eqclass.counts already exists; skipping.." ) || \
 	( echo " [INFO] [EMPIRES] Starting eq extract in $dir" && \
 		$jcall nlEmpiRe.rnaseq.reads.TranscriptEQClassWriter -gtf $gtf \
-		-table $samplesTable -o $dir/eqclass.counts > $out/EMPIRES/eqclass_$method.log )
+		-table $samplesTable -o $dir/$method.eqclass.counts > $out/EMPIRES/eqclass_$method.log )
 
 	kill -15 $wid
 	watch pidstat -dru -hlH >> $log/empires_${name}_${method}_diff_exp_splic-$(date +%s).pidstat & wid=$!
@@ -256,7 +256,7 @@ if [[ "$contextmap" = "y" ]]; then
 	( [ -f "$diffsplicOut$method" ] && echo "[INFO] [EMPIRES] $diffsplicOut$method already exists; skipping.."$'\n' ) || \
 	( echo "[INFO] [EMPIRES] Starting diff processing in $dir" && \
 		$jcall nlEmpiRe.release.EQCInput -samples $samplesTable2 \
-		 -o $diffsplicOut$method -i $dir/eqclass.counts )
+		 -o $diffsplicOut$method -i $dir/$method.eqclass.counts )
 	
 	kill -15 $wid
 fi
@@ -268,10 +268,10 @@ if [[ "$ideal" = "y" ]]; then
 
 	watch pidstat -dru -hlH >> $log/empires_${name}_${method}_eqextract-$(date +%s).pidstat & wid=$!
 
-	( [ -f "$dir"/eqclass.counts ] && echo "$'\n'[INFO] [EMPIRES] $dir/eqclass.counts already exists; skipping.." ) || \
+	( [ -f "$dir"/$method.eqclass.counts ] && echo "$'\n'[INFO] [EMPIRES] $dir/eqclass.counts already exists; skipping.." ) || \
 	( echo " [INFO] [EMPIRES] Starting eq extract in $dir" && \
 		$jcall nlEmpiRe.rnaseq.reads.TranscriptEQClassWriter -gtf $gtf \
-		-table $samplesTable -o $dir/eqclass.counts > $out/EMPIRES/eqclass_$method.log )
+		-table $samplesTable -o $dir/$method.eqclass.counts > $out/EMPIRES/eqclass_$method.log )
 
 	kill -15 $wid
 	watch pidstat -dru -hlH >> $log/empires_${name}_${method}_diff_exp_splic-$(date +%s).pidstat & wid=$!
@@ -279,7 +279,7 @@ if [[ "$ideal" = "y" ]]; then
 	( [ -f "$diffsplicOut$method" ] && echo "[INFO] [EMPIRES] $diffsplicOut$method already exists; skipping.."$'\n' ) || \
 	( echo "[INFO] [EMPIRES] Starting diff processing in $dir" && \
 		$jcall nlEmpiRe.release.EQCInput -samples $samplesTable2 \
-		 -o $diffsplicOut$method -i $dir/eqclass.counts )
+		 -o $diffsplicOut$method -i $dir/$method.eqclass.counts )
 	
 	kill -15 $wid
 fi
