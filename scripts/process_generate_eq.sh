@@ -15,7 +15,7 @@ if [[ ${PIPESTATUS[0]} -ne 4 ]]; then
 fi
 
 OPTIONS=
-LONGOPTS=index:,pdata:,samples:,out:,nthread:,log:,strand:,hisat2,star,kallisto,salmon,contextmap,stringtie,ecc,ideal,gtf:,
+LONGOPTS=index:,pdata:,samples:,out:,nthread:,log:,strand:,hisat2,star,kallisto,salmon,contextmap,stringtie,ecc,ideal,gtf:,salmonstar
 
 # -regarding ! and PIPESTATUS see above
 # -temporarily store output to be able to check for errors
@@ -29,7 +29,7 @@ if [[ ${PIPESTATUS[0]} -ne 0 ]]; then
 fi
 # read getopt’s output this way to handle the quoting right:
 eval set -- "$PARSED"
-contextmap=n ideal=n hisat2=n star=n kallisto=n salmon=n stringtie=n ecc=n
+contextmap=n ideal=n hisat2=n star=n kallisto=n salmon=n stringtie=n ecc=n salmonstar=n
 # now enjoy the options in order and nicely split until we see --
 while true; do
     case "$1" in
@@ -79,6 +79,10 @@ while true; do
             ;;
         --salmon)
             salmon=y
+            shift
+            ;;
+        --salmonstar)
+            salmonstar=y
             shift
             ;;
         --contextmap)
@@ -284,7 +288,7 @@ if [[ "$ideal" = "y" ]]; then
 	kill -15 $wid
 fi
 
-if [[ "$salmon" = "y" ]]; then
+if [[ "$salmonstar" = "y" ]]; then
 	dir=$out/SALMON/STAR
 	method="SALMON_STAR"
 	cd $dir
@@ -296,7 +300,9 @@ if [[ "$salmon" = "y" ]]; then
 		$jcall nlEmpiRe.input.TranscriptEstimateInput -cond2reps $cond2reps -gtf $gtf -trestimateroot $dir -o $diffsplicOut$method )
 
 	kill -15 $wid
+fi
 
+if [[ "$salmon" = "y" ]]; then
 	dir=$out/SALMON/READS
 	method="SALMON_READS"
 	cd $dir
