@@ -175,7 +175,7 @@ if [[ "$ecc" = "y" ]]; then
 			else
 				sed '1d' $pdata | awk -v strand=$strand '{print $1 "\t" $2 "\t" $1 ".fastq.gz" "\t" "\t" strand}' >> $samplesTable2 )
 			fi
-		)
+		))
 	#for sample in `cat $sampleList`; do echo $sample$'\t'$sample.bam$'\t'$strand >> $samplesTable ; done
 
 	##
