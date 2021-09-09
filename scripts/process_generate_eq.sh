@@ -15,7 +15,7 @@ if [[ ${PIPESTATUS[0]} -ne 4 ]]; then
 fi
 
 OPTIONS=
-LONGOPTS=index:,pdata:,samples:,out:,nthread:,log:,strand:,hisat2,star,kallisto,salmon,contextmap,stringtie,ecc,ideal,gtf:,salmonstar
+LONGOPTS=index:,pdata:,samples:,out:,nthread:,log:,strand:,hisat2,star,kallisto,salmon,contextmap,stringtie,ecc,ideal,gtf:,salmonstar,paired
 
 # -regarding ! and PIPESTATUS see above
 # -temporarily store output to be able to check for errors
@@ -30,6 +30,7 @@ fi
 # read getopt’s output this way to handle the quoting right:
 eval set -- "$PARSED"
 contextmap=n ideal=n hisat2=n star=n kallisto=n salmon=n stringtie=n ecc=n salmonstar=n
+paired=''
 # now enjoy the options in order and nicely split until we see --
 while true; do
     case "$1" in
@@ -101,6 +102,10 @@ while true; do
             ideal=y
             shift
             ;;
+		--paired)
+			paired="y"
+			shift
+			;;
         --)
             shift
             break
@@ -165,10 +170,12 @@ if [[ "$ecc" = "y" ]]; then
 	##
 	( [ -f "$samplesTable2" ] && echo "$'\n'[INFO] [EMPIRES] $samplesTable2 already exists; skipping.." ) || \
 		( echo "label"$'\t'"condition"$'\t'"fw"$'\t'"rw"$'\t'"strandness" > $samplesTable2 &&
-		sed '1d' $pdata | awk -v strand=$strand '{print $1 "\t" $2 "\t" $1 "_1.fastq.gz" "\t" $1 "_2.fastq.gz" "\t" strand}' >> $samplesTable2 )
-	pairedTest=`sed '1d' $samplesTable2 | head -1 | cut -f3`
-	( [ -f $pairedTest ] ) || ( echo "label"$'\t'"condition"$'\t'"fw"$'\t'"rw"$'\t'"strandness" > $samplesTable2 &&
-		sed '1d' $pdata | awk -v strand=$strand '{print $1 "\t" $2 "\t" $1 ".fastq.gz" "\t" "\t" strand}' >> $samplesTable2 )
+		(	if [[ "$paired" = "y" ]]; then 
+				sed '1d' $pdata | awk -v strand=$strand '{print $1 "\t" $2 "\t" $1 "_1.fastq.gz" "\t" $1 "_2.fastq.gz" "\t" strand}' >> $samplesTable2 )
+			else
+				sed '1d' $pdata | awk -v strand=$strand '{print $1 "\t" $2 "\t" $1 ".fastq.gz" "\t" "\t" strand}' >> $samplesTable2 )
+			fi
+		)
 	#for sample in `cat $sampleList`; do echo $sample$'\t'$sample.bam$'\t'$strand >> $samplesTable ; done
 
 	##
