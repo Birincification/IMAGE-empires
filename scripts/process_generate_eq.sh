@@ -166,7 +166,7 @@ if [[ "$ecc" = "y" ]]; then
 	( [ -f "$samplesTable2" ] && echo "$'\n'[INFO] [EMPIRES] $samplesTable2 already exists; skipping.." ) || \
 		( echo "label"$'\t'"condition"$'\t'"fw"$'\t'"rw"$'\t'"strandness" > $samplesTable2 &&
 		sed '1d' $pdata | awk -v strand=$strand '{print $1 "\t" $2 "\t" $1 "_1.fastq.gz" "\t" $1 "_2.fastq.gz" "\t" strand}' >> $samplesTable2 )
-	file=`sed '1d' $pdata | head -1 | cut -f3`
+	file=`sed '1d' $samplesTable2 | head -1 | cut -f3`
 	( [ -f $file ] ) || ( echo "label"$'\t'"condition"$'\t'"fw"$'\t'"rw"$'\t'"strandness" > $samplesTable2 &&
 		sed '1d' $pdata | awk -v strand=$strand '{print $1 "\t" $2 "\t" $1 ".fastq.gz" "\t" "\t" strand}' >> $samplesTable2 )
 	#for sample in `cat $sampleList`; do echo $sample$'\t'$sample.bam$'\t'$strand >> $samplesTable ; done
