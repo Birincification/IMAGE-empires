@@ -169,11 +169,10 @@ if [[ "$ecc" = "y" ]]; then
 	## cond1_01    cond1   cond1_01_1.fastq.gz cond1_01_2.fastq.gz true
 	##
 	( [ -f "$samplesTable2" ] && echo "$'\n'[INFO] [EMPIRES] $samplesTable2 already exists; skipping.." ) || \
-		( echo "label"$'\t'"condition"$'\t'"fw"$'\t'"rw"$'\t'"strandness" > $samplesTable2 &&
-		(	if [[ "$paired" = "y" ]]; then 
-				sed '1d' $pdata | awk -v strand=$strand '{print $1 "\t" $2 "\t" $1 "_1.fastq.gz" "\t" $1 "_2.fastq.gz" "\t" strand}' >> $samplesTable2 
+		((	if [[ "$paired" = "y" ]]; then 
+				echo "label"$'\t'"condition"$'\t'"fw"$'\t'"rw"$'\t'"strandness" > $samplesTable2 && sed '1d' $pdata | awk -v strand=$strand '{print $1 "\t" $2 "\t" $1 "_1.fastq.gz" "\t" $1 "_2.fastq.gz" "\t" strand}' >> $samplesTable2 
 			else
-				sed '1d' $pdata | awk -v strand=$strand '{print $1 "\t" $2 "\t" $1 ".fastq.gz" "\t" "\t" strand}' >> $samplesTable2 
+				echo "label"$'\t'"condition"$'\t'"fw"$'\t'"strandness" > $samplesTable2 &&sed '1d' $pdata | awk -v strand=$strand '{print $1 "\t" $2 "\t" $1 ".fastq.gz" "\t" strand}' >> $samplesTable2 
 			fi
 		))
 	#for sample in `cat $sampleList`; do echo $sample$'\t'$sample.bam$'\t'$strand >> $samplesTable ; done
