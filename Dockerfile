@@ -1,4 +1,4 @@
-FROM openjdk:15-alpine
+FROM openjdk:17-alpine
 
 RUN apk add bash sysstat
 RUN apk update
