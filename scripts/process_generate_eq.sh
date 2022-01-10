@@ -149,6 +149,7 @@ fi
 #cond1   cond1_00
 #cond1   cond1_01
 #
+[ -f "$cond2reps" ] && rm "$cond2reps"
 [ -f "$samplesTable" ] && rm "$samplesTable"
 [ -f "$samplesTable2" ] && rm "$samplesTable2"
 
