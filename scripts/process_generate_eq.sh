@@ -149,6 +149,9 @@ fi
 #cond1   cond1_00
 #cond1   cond1_01
 #
+[ -f "$samplesTable" ] && rm "$samplesTable"
+[ -f "$samplesTable2" ] && rm "$samplesTable2"
+
 ## create samplesTable from sampleList
 ## echo 'id\tbam\tstrandness' > $samplesTable
 #( [ -f "$samplesTable" ] && echo "$'\n'[INFO] [EMPIRES] $samplesTable already exists; skipping.." ) || \
