@@ -186,6 +186,8 @@ if [[ "$ecc" = "y" ]]; then
 	## (-nthreads) number of parallel threads used for the mapping, default: 10.
 	## 
 
+	starter="$(date +%s)"
+	echo "$(date +%s)" >> $log/empires-ecc-eqextract_${name}.time
 	watch pidstat -dru -hlH >> $log/empires-ecc-eqextract_${name}.$(date +%s).pidstat & wid=$!
 
 	## test if output exists
@@ -197,8 +199,12 @@ if [[ "$ecc" = "y" ]]; then
 		-o $eccCounts \
 		-basedir $samples )
 
+	echo "$(($(date +%s)-$starter))" >> $log/empires-ecc-eqextract_${name}.$(date +%s).runtime
 	kill -15 $wid
+	echo "$(date +%s)" >> $log/empires-ecc-eqextract_${name}.time
 
+	starter="$(date +%s)"
+	echo "$(date +%s)" >> $log/empires-diff_${name}_ecc.time
 	watch pidstat -dru -hlH >> $log/empires-diff_${name}_ecc.$(date +%s).pidstat & wid=$!
 
 	## diffexp and das
@@ -207,7 +213,9 @@ if [[ "$ecc" = "y" ]]; then
 		-samples $samplesTable2 \
 		-o ${diffsplicOut}ECC
 
+	echo "$(($(date +%s)-$starter))" >> $log/empires-diff_${name}_ecc.$(date +%s).runtime
 	kill -15 $wid
+	echo "$(date +%s)" >> $log/empires-diff_${name}_ecc.time
 fi
 
 if [[ "$hisat2" = "y" ]]; then
@@ -215,22 +223,31 @@ if [[ "$hisat2" = "y" ]]; then
 	method="HISAT"
 	cd $dir
 
+	echo "$(date +%s)" >> $log/empires-eqextract_${name}_${method}.time
 	watch pidstat -dru -hlH >> $log/empires-eqextract_${name}_${method}.$(date +%s).pidstat & wid=$!
+	starter="$(date +%s)"
 
 	( [ -f "$dir"/$method.eqclass.counts ] && echo "$'\n'[INFO] [EMPIRES] $dir/eqclass.counts already exists; skipping.." ) || \
 	( echo " [INFO] [EMPIRES] Starting eq extract in $dir" && \
 		$jcall nlEmpiRe.rnaseq.reads.TranscriptEQClassWriter -gtf $gtf \
 		-table $samplesTable -o $dir/$method.eqclass.counts >> $out/EMPIRES/eqclass_$method.log )
 
+	echo "$(($(date +%s)-$starter))" >> $log/empires-eqextract_${name}_$method.$(date +%s).runtime
 	kill -15 $wid
+	echo "$(date +%s)" >> $log/empires-eqextract_${name}_${method}.time
+
+	echo "$(date +%s)" >> $log/empires-diff_${name}_${method}.time
 	watch pidstat -dru -hlH >> $log/empires-diff_${name}_${method}.$(date +%s).pidstat & wid=$!
+	starter="$(date +%s)"
 
 	( [ -f "$diffsplicOut$method" ] && echo "[INFO] [EMPIRES] $diffsplicOut$method already exists; skipping.."$'\n' ) || \
 	( echo "[INFO] [EMPIRES] Starting diff processing in $dir" && \
 		$jcall nlEmpiRe.release.EQCInput -samples $samplesTable2 \
 		 -o $diffsplicOut$method -i $dir/$method.eqclass.counts )
-	
+
+	echo "$(($(date +%s)-$starter))" >> $log/empires-diff_${name}_${method}.$(date +%s).runtime
 	kill -15 $wid
+	echo "$(date +%s)" >> $log/empires-diff_${name}_${method}.time
 fi
 
 if [[ "$star" = "y" ]]; then
@@ -238,22 +255,31 @@ if [[ "$star" = "y" ]]; then
 	method="STAR"
 	cd $dir
 
+	echo "$(date +%s)" >> $log/empires-eqextract_${name}_${method}.time
 	watch pidstat -dru -hlH >> $log/empires-eqextract_${name}_${method}.$(date +%s).pidstat & wid=$!
+	starter="$(date +%s)"
 
 	( [ -f "$dir"/$method.eqclass.counts ] && echo "$'\n'[INFO] [EMPIRES] $dir/eqclass.counts already exists; skipping.." ) || \
 	( echo " [INFO] [EMPIRES] Starting eq extract in $dir" && \
 		$jcall nlEmpiRe.rnaseq.reads.TranscriptEQClassWriter -gtf $gtf \
 		-table $samplesTable -o $dir/$method.eqclass.counts >> $out/EMPIRES/eqclass_$method.log )
 
+	echo "$(($(date +%s)-$starter))" >> $log/empires-eqextract_${name}_$method.$(date +%s).runtime
 	kill -15 $wid
+	echo "$(date +%s)" >> $log/empires-eqextract_${name}_${method}.time
+
+	echo "$(date +%s)" >> $log/empires-diff_${name}_${method}.time
 	watch pidstat -dru -hlH >> $log/empires-diff_${name}_${method}.$(date +%s).pidstat & wid=$!
+	starter="$(date +%s)"
 
 	( [ -f "$diffsplicOut$method" ] && echo "[INFO] [EMPIRES] $diffsplicOut$method already exists; skipping.."$'\n' ) || \
 	( echo "[INFO] [EMPIRES] Starting diff processing in $dir" && \
 		$jcall nlEmpiRe.release.EQCInput -samples $samplesTable2 \
 		 -o $diffsplicOut$method -i $dir/$method.eqclass.counts )
-	
+
+	echo "$(($(date +%s)-$starter))" >> $log/empires-diff_${name}_${method}.$(date +%s).runtime
 	kill -15 $wid
+	echo "$(date +%s)" >> $log/empires-diff_${name}_${method}.time
 fi
 
 if [[ "$contextmap" = "y" ]]; then
@@ -261,22 +287,31 @@ if [[ "$contextmap" = "y" ]]; then
 	method="CONTEXTMAP"
 	cd $dir
 
+	echo "$(date +%s)" >> $log/empires-eqextract_${name}_${method}.time
 	watch pidstat -dru -hlH >> $log/empires-eqextract_${name}_${method}.$(date +%s).pidstat & wid=$!
+	starter="$(date +%s)"
 
 	( [ -f "$dir"/$method.eqclass.counts ] && echo "$'\n'[INFO] [EMPIRES] $dir/eqclass.counts already exists; skipping.." ) || \
 	( echo " [INFO] [EMPIRES] Starting eq extract in $dir" && \
 		$jcall nlEmpiRe.rnaseq.reads.TranscriptEQClassWriter -gtf $gtf \
 		-table $samplesTable -o $dir/$method.eqclass.counts >> $out/EMPIRES/eqclass_$method.log )
 
+	echo "$(($(date +%s)-$starter))" >> $log/empires-eqextract_${name}_$method.$(date +%s).runtime
 	kill -15 $wid
+	echo "$(date +%s)" >> $log/empires-eqextract_${name}_${method}.time
+
+	echo "$(date +%s)" >> $log/empires-diff_${name}_${method}.time
 	watch pidstat -dru -hlH >> $log/empires-diff_${name}_${method}.$(date +%s).pidstat & wid=$!
+	starter="$(date +%s)"
 
 	( [ -f "$diffsplicOut$method" ] && echo "[INFO] [EMPIRES] $diffsplicOut$method already exists; skipping.."$'\n' ) || \
 	( echo "[INFO] [EMPIRES] Starting diff processing in $dir" && \
 		$jcall nlEmpiRe.release.EQCInput -samples $samplesTable2 \
 		 -o $diffsplicOut$method -i $dir/$method.eqclass.counts )
-	
+
+	echo "$(($(date +%s)-$starter))" >> $log/empires-diff_${name}_${method}.$(date +%s).runtime
 	kill -15 $wid
+	echo "$(date +%s)" >> $log/empires-diff_${name}_${method}.time
 fi
 
 if [[ "$ideal" = "y" ]]; then
@@ -284,22 +319,31 @@ if [[ "$ideal" = "y" ]]; then
 	method="IDEAL"
 	cd $dir
 
+	echo "$(date +%s)" >> $log/empires-eqextract_${name}_${method}.time
 	watch pidstat -dru -hlH >> $log/empires-eqextract_${name}_${method}.$(date +%s).pidstat & wid=$!
+	starter="$(date +%s)"
 
 	( [ -f "$dir"/$method.eqclass.counts ] && echo "$'\n'[INFO] [EMPIRES] $dir/eqclass.counts already exists; skipping.." ) || \
 	( echo " [INFO] [EMPIRES] Starting eq extract in $dir" && \
 		$jcall nlEmpiRe.rnaseq.reads.TranscriptEQClassWriter -gtf $gtf \
 		-table $samplesTable -o $dir/$method.eqclass.counts >> $out/EMPIRES/eqclass_$method.log )
 
+	echo "$(($(date +%s)-$starter))" >> $log/empires-eqextract_${name}_$method.$(date +%s).runtime
 	kill -15 $wid
+	echo "$(date +%s)" >> $log/empires-eqextract_${name}_${method}.time
+
+	echo "$(date +%s)" >> $log/empires-diff_${name}_${method}.time
 	watch pidstat -dru -hlH >> $log/empires-diff_${name}_${method}.$(date +%s).pidstat & wid=$!
+	starter="$(date +%s)"
 
 	( [ -f "$diffsplicOut$method" ] && echo "[INFO] [EMPIRES] $diffsplicOut$method already exists; skipping.."$'\n' ) || \
 	( echo "[INFO] [EMPIRES] Starting diff processing in $dir" && \
 		$jcall nlEmpiRe.release.EQCInput -samples $samplesTable2 \
 		 -o $diffsplicOut$method -i $dir/$method.eqclass.counts )
-	
+
+	echo "$(($(date +%s)-$starter))" >> $log/empires-diff_${name}_${method}.$(date +%s).runtime
 	kill -15 $wid
+	echo "$(date +%s)" >> $log/empires-diff_${name}_${method}.time
 fi
 
 if [[ "$salmonstar" = "y" ]]; then
@@ -307,13 +351,17 @@ if [[ "$salmonstar" = "y" ]]; then
 	method="SALMON_STAR"
 	cd $dir
 
+	echo "$(date +%s)" >> $log/empires-trestimate_${name}_${method}.time
 	watch pidstat -dru -hlH >> $log/empires-trestimate_${name}_${method}.$(date +%s).pidstat & wid=$!
+	starter="$(date +%s)"
 
 	( [ -f "$diffsplicOut$method" ] && echo "[INFO] [EMPIRES] $diffsplicOut$method already exists; skipping.."$'\n' ) || \
 	( echo "[INFO] [EMPIRES] Starting processing in $dir" && \
 		$jcall nlEmpiRe.input.TranscriptEstimateInput -cond2reps $cond2reps -gtf $gtf -trestimateroot $dir -o $diffsplicOut$method )
 
+	echo "$(($(date +%s)-$starter))" >> $log/empires-trestimate_${name}_${method}.$(date +%s).runtime
 	kill -15 $wid
+	echo "$(date +%s)" >> $log/empires-trestimate_${name}_${method}.time
 fi
 
 if [[ "$salmon" = "y" ]]; then
@@ -321,13 +369,17 @@ if [[ "$salmon" = "y" ]]; then
 	method="SALMON_READS"
 	cd $dir
 
+	echo "$(date +%s)" >> $log/empires-trestimate_${name}_${method}.time
 	watch pidstat -dru -hlH >> $log/empires-trestimate_${name}_${method}.$(date +%s).pidstat & wid=$!
+	starter="$(date +%s)"
 
 	( [ -f "$diffsplicOut$method" ] && echo "[INFO] [EMPIRES] $diffsplicOut$method already exists; skipping.."$'\n' ) || \
 	( echo "[INFO] [EMPIRES] Starting processing in $dir" && \
 		$jcall nlEmpiRe.input.TranscriptEstimateInput -cond2reps $cond2reps -gtf $gtf -trestimateroot $dir -o $diffsplicOut$method )
 
+	echo "$(($(date +%s)-$starter))" >> $log/empires-trestimate_${name}_${method}.$(date +%s).runtime
 	kill -15 $wid
+	echo "$(date +%s)" >> $log/empires-trestimate_${name}_${method}.time
 fi
 
 if [[ "$kallisto" = "y" ]]; then
@@ -335,13 +387,17 @@ if [[ "$kallisto" = "y" ]]; then
 	method="KALLISTO"
 	cd $dir
 
+	echo "$(date +%s)" >> $log/empires-trestimate_${name}_${method}.time
 	watch pidstat -dru -hlH >> $log/empires-trestimate_${name}_${method}.$(date +%s).pidstat & wid=$!
+	starter="$(date +%s)"
 
 	( [ -f "$diffsplicOut$method" ] && echo "[INFO] [EMPIRES] $diffsplicOut$method already exists; skipping.."$'\n' ) || \
 	( echo "[INFO] [EMPIRES] Starting processing in $dir" && \
 		$jcall nlEmpiRe.input.TranscriptEstimateInput -cond2reps $cond2reps -gtf $gtf -trestimateroot $dir -o $diffsplicOut$method )
 
+	echo "$(($(date +%s)-$starter))" >> $log/empires-trestimate_${name}_${method}.$(date +%s).runtime
 	kill -15 $wid
+	echo "$(date +%s)" >> $log/empires-trestimate_${name}_${method}.time
 fi
 
 if [[ "$stringtie" = "y" ]]; then
@@ -349,11 +405,15 @@ if [[ "$stringtie" = "y" ]]; then
 	method="STRINGTIE"
 	cd $dir
 
+	echo "$(date +%s)" >> $log/empires-trestimate_${name}_${method}.time
 	watch pidstat -dru -hlH >> $log/empires-trestimate_${name}_${method}.$(date +%s).pidstat & wid=$!
+	starter="$(date +%s)"
 
 	( [ -f "$diffsplicOut$method" ] && echo "[INFO] [EMPIRES] $diffsplicOut$method already exists; skipping.."$'\n' ) || \
 	( echo "[INFO] [EMPIRES] Starting processing in $dir" && \
 		$jcall nlEmpiRe.input.TranscriptEstimateInput -cond2reps $cond2reps -gtf $gtf -trestimateroot $dir -o $diffsplicOut$method )
 
+	echo "$(($(date +%s)-$starter))" >> $log/empires-trestimate_${name}_${method}.$(date +%s).runtime
 	kill -15 $wid
+	echo "$(date +%s)" >> $log/empires-trestimate_${name}_${method}.time
 fi
