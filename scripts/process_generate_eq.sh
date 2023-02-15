@@ -348,7 +348,7 @@ fi
 
 if [[ "$salmonstar" = "y" ]]; then
 	dir=$out/SALMON/STAR
-	method="SALMON_STAR"
+	method="SALMON-STAR"
 	cd $dir
 
 	echo "$(date +%s)" >> $log/empires-trestimate_${name}_${method}.time
@@ -366,7 +366,7 @@ fi
 
 if [[ "$salmon" = "y" ]]; then
 	dir=$out/SALMON/READS
-	method="SALMON_READS"
+	method="SALMON-READS"
 	cd $dir
 
 	echo "$(date +%s)" >> $log/empires-trestimate_${name}_${method}.time
