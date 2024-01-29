@@ -4,6 +4,7 @@ gtf=$1
 fasta=$2
 fastaIndex=$3
 log=$4
+index=$5
 
 mkdir -p /home/data/indices/empires
 
@@ -16,6 +17,6 @@ java -cp /home/software/nlEmpiRe.jar nlEmpiRe.rnaseq.mapping.ExtractTranscriptom
  -gtf $gtf \
  -genome $fasta \
  -genomeidx $fastaIndex \
- -o /home/data/indices/empires/empires.index
+ -o $index/empires/empires.index
 
 kill -15 $wid
